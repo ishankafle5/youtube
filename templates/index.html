@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog App</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            background: black;
+        }
+
+        header {
+            background-color: aqua;
+            height: 50px;
+            display: flex;
+        }
+
+
+
+        nav {
+            background-color: aqua;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin: 0 auto;
+        }
+
+        nav ul {
+            background-color: aqua;
+
+            display: flex;
+        }
+
+        nav ul li {
+            background-color: aqua;
+            font-size: 20px;
+            font-weight: 600;
+            list-style: none;
+            margin: 0 20px;
+        }
+
+        .maincontainer {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            justify-items: center;
+        }
+
+        .maincontainer form input {
+            display: flex;
+            height: 30px;
+            width: 300px;
+            border-radius: 20px;
+            color: white;
+            border: 1px solid rgb(86, 145, 247);
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .maincontainer form button {
+            display: block;
+            height: 30px;
+            width: 120px;
+            border-radius: 10px;
+            border: 1px solid white;
+            margin: 10px auto;
+            color: black;
+            font-weight: 600;
+            background-color: aqua;
+            padding: 0 5px;
+        }
+
+        .maincontainer iframe {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li>Contact Us</li>
+                <li>Suggestion Video</li>
+            </ul>
+        </nav>
+    </header>
+    <div class="maincontainer">
+        <form action="downloader" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if error %}
+               <p style="color:white;"> {{error}}</p>
+               <br>
+               <br>
+            {% endif %}
+            <input type="text" name="link" id="searchbar" placeholder="Enter link here" oninput="youtubelink()">
+            <button type="submit">Download Here</button>
+        </form>
+
+        <iframe id="video-player" width="560" height="315" src="" title="" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+    </div>
+
+    <script>
+        function youtubelink() {
+
+            var inputValue = document.getElementById("searchbar").value;
+            var iframe = document.getElementById("video-player");
+            // console.log(inputValue)
+
+            var newvalue = String(inputValue);
+            var newvalue = newvalue.replace("https://www.youtube.com/watch?v=", "");
+
+            var newvalue = newvalue.replace("https://youtu.be/", "")
+
+            if (newvalue == "") {
+                return;
+            }
+
+            console.log(newvalue);
+
+            iframe.src = "https://www.youtube.com/embed/" + newvalue;
+
+        }
+    </script>
+</body>
+
+</html>
